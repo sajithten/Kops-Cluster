@@ -35,7 +35,9 @@
 	source $HOME/.bashrc
 	kubectl version --short --client
 
-# 6. Install kubectl 1.14.6 version
+---
+
+## _Install kubectl 1.14.6 version_
 	curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
 	chmod +x ./kubectl
 	mkdir -p $HOME/bin
@@ -44,13 +46,13 @@
 	echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 	source $HOME/.bashrc
 	kubectl version --short --client
-
-# 7. Create S3 bucket in AWS
+---
+# 6. Create S3 bucket in AWS
     S3 bucket is used by kubernetes to persist cluster state, lets create s3 bucket using aws cli Note: Make sure you choose bucket name that is uniqe accross all aws accounts
 
 	aws s3 mb s3://unique-bucket-name --region ap-south-1
 
-# 8. Create hosted zone in AWS Route53
+# 7. Create hosted zone in AWS Route53
 	Head over to aws Route53 and create hostedzone
 	Choose name for example (domainname.ml)
 	Hit create
@@ -59,11 +61,11 @@
 
     Add NS records for the domain where you register the domain 
 
-# 9. Create ssh key pair
+# 8. Create ssh key pair
 This keypair is used for ssh into kubernetes cluster
 
 	ssh-keygen
-# 10. Create a Kubernetes cluster definition
+# 9. Create a Kubernetes cluster definition
     
 	kops create cluster --yes --state=s3://<bucketname> --zones=<AZname1, AZname2> --node-count=<no.of node, minimum 2> --name=<clustername>.k8s.local 
 
@@ -79,8 +81,8 @@ This keypair is used for ssh into kubernetes cluster
 
     For the above above command, you might see validation failed error initially when you create cluster and it is expected behaviour, you have to wait for some more time and check again.
 
-# 11. Check nodes of the cluster
+# 10. Check nodes of the cluster
 	kubectl get nodes
 
-# 12. Clean-UP
+# 11. Clean-UP
 	kops delete cluster --name=domainname.ml --state s3://domainname.ml.k8s --yes
